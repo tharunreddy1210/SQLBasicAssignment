@@ -1,0 +1,170 @@
+1. CREATE TABLE address (
+	add_id INT PRIMARY KEY,
+	country VARCHAR(255),
+	state VARCHAR(255),
+	city VARCHAR(255),
+	street VARCHAR(255),
+	zipcode INT,
+	pre_known_add JSONB,
+	created_ts TIMESTAMP,
+	last_updated_ts TIMESTAMP
+);
+2. CREATE TABLE department (
+	department_id INT PRIMARY KEY,
+	department_name VARCHAR(255),
+	department_code CHAR(4) NOT NULL,
+	address_id INT,
+	dept_head_id INT NOT NULL,
+	FOREIGN KEY (address_id) REFERENCES address(add_id)
+);
+3. CREATE TABLE emp (
+	emp_id INT PRIMARY KEY,
+	first_name VARCHAR(255) NOT NULL,
+	last_name VARCHAR(255),
+	email VARCHAR(255) NOT NULL,
+	phone_number VARCHAR(255) NOT NULL,
+	dept_id INT,
+	address_id INT,
+	blood_group VARCHAR(255),
+	dob DATE,
+	doj DATE,
+	dot DATE,
+	created_ts TIMESTAMP,
+	reference VARCHAR(255),
+	role VARCHAR(255),
+	salary FLOAT,
+	band INT,
+	reports_to INT,
+	FOREIGN KEY (dept_id) REFERENCES department(department_id),
+	FOREIGN KEY (address_id) REFERENCES address(add_id)
+);
+4. INSERT INTO address (
+	add_id,
+	country,
+	state,
+	city,
+	street,
+	zipcode,
+	pre_known_add,
+	created_ts,
+	last_updated_ts
+)
+VALUES (
+	1, -- add_id
+	'United States', -- country
+	'California', -- state
+	'San Francisco', -- city
+	'Market Street', -- street
+	94103, -- zipcode
+	'{"landmark": "near Union Square"}', -- pre_known_add
+	CURRENT_TIMESTAMP, -- created_ts
+	CURRENT_TIMESTAMP -- last_updated_ts
+);
+5. INSERT INTO department (
+	department_id,
+	department_name,
+	department_code,
+	address_id,
+	dept_head_id
+)
+VALUES (
+	1, -- department_id
+	'Sales', -- department_name
+	'SAL', -- department_code
+	1, -- address_id (Assuming there is an address with add_id = 1)
+	1001 -- dept_head_id
+);
+6. 
+INSERT INTO emp (
+	emp_id,
+	first_name,
+	last_name,
+	email,
+	phone_number,
+	dept_id,
+	address_id,
+	blood_group,
+	dob,
+	doj,
+	dot,
+	created_ts,
+	reference,
+	role,
+	salary,
+	band,
+	reports_to
+)
+VALUES (
+	1, -- emp_id
+	'John', -- first_name
+	'Doe', -- last_name
+	'john.doe@example.com', -- email
+	'1234567890', -- phone_number
+	1, -- dept_id (Assuming there is a department with department_id = 1)
+	1, -- address_id (Assuming there is an address with add_id = 1)
+	'O+', -- blood_group
+	'1980-01-01', -- dob
+	'2020-01-01', -- doj
+	'2030-01-01', -- dot
+	CURRENT_TIMESTAMP, -- created_ts
+	'Referred by Jane Doe', -- reference
+	'Manager', -- role
+	50000.00, -- salary
+	5, -- band
+	2 -- reports_to
+);
+7.
+UPDATE emp
+SET first_name = 'Jane', last_name = 'Doe', email = 'jane.doe@example.com'
+WHERE emp_id = 1;
+UPDATE address
+SET country = 'United States', state = 'California', city = 'San Francisco', street = 'Market Street', zipcode = 94103
+WHERE add_id = 1;
+UPDATE department
+SET department_name = 'Sales', department_code = 'SAL'
+WHERE department_id = 1;
+8.
+DELETE FROM EMP
+WHERE emp_id = 1;
+DELETE FROM ADDRESS
+WHERE add_id = 1;
+DELETE FROM DEPARTMENT
+WHERE department_id = 1;
+9.
+ALTER TABLE EMP
+DROP COLUMN reports_to;
+10.
+ALTER TABLE DEPARTMENT
+DROP COLUMN dept_head_id;
+11.
+ALTER TABLE EMP
+MODIFY band VARCHAR2(50);
+12.
+SELECT emp_id, first_name, last_name, DATEDIFF(YEAR, dob, GETDATE()) AS age
+FROM EMP;
+13.
+SELECT CURRENT_TIMESTAMP AS Today;
+14.
+SELECT emp_id, first_name, last_name, DATEDIFF(YEAR, doj, GETDATE()) AS experience_years
+FROM EMP;
+15.
+ALTER TABLE EMP
+ADD comment_col VARCHAR2(255);
+16.
+ALTER TABLE DEPARTMENT
+ADD comment_col VARCHAR2(255);
+17.
+ALTER TABLE ADDRESS
+ADD comment_col VARCHAR2(255);
+18.
+TRUNCATE TABLE EMP;
+TRUNCATE TABLE ADDRESS;
+TRUNCATE TABLE DEPARTMENT;
+19.
+Ask (did not understand the question)
+20.
+DROP TABLE EMP;
+DROP TABLE ADDRESS;
+DROP TABLE DEPARTMENT;
+
+
